@@ -1,5 +1,7 @@
-﻿using DataAccess.Abstract;
+﻿using Core.DataAccess.EntityFramework;
+using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,45 +12,18 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EFCarDal : ICarDal
+    public class EFCarDal : EfEntityRepositoryBase<Car, RecapContext>, ICarDal
     {
-        RecapContext _context;
-        public EFCarDal(RecapContext context)
+        public List<CarDetailDto> GetCarDetails()
         {
-            _context = context;
-        }
-        public void Add(Car entity)
-        {
-            var addCar = _context.Entry(entity);
-            addCar.State = EntityState.Added;
-            _context.SaveChanges();
-        }
-
-        public void Delete(Car entity)
-        {
-            var deletedCar = _context.Entry(entity);
-            deletedCar.State = EntityState.Deleted;
-            _context.SaveChanges();
-        }
-
-        public Car Get(Expression<Func<Car, bool>> filter)
-        {
-            return _context.Set<Car>().SingleOrDefault();
-        }
-
-        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
-        {
-            return filter == null
-                ? _context.Set<Car>().ToList()
-                : _context.Set<Car>().Where(filter).ToList();
-
-        }
-
-        public void Update(Car entity)
-        {
-            var updatedEntity = _context.Entry(entity);
-            updatedEntity.State = EntityState.Modified;
-            _context.SaveChanges();
+            using (RecapContext context = new RecapContext())
+            {
+                var result = from c in context.Car
+                             join b in context.Brand on c.BrandId equals b.BrandId
+                             join co in context.Color on c.ColorId equals co.ColorId
+                             select new CarDetailDto { BrandName = b.BrandName, CarId = c.CarId, ColorName = co.ColorName, DailyPrice = c.DailyPrice };
+                return result.ToList();
+            }
         }
     }
 }

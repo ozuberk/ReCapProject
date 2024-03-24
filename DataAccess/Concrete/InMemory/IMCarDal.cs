@@ -1,5 +1,6 @@
 ﻿using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,12 @@ namespace DataAccess.Concrete.InMemory
         {
             return _cars.Where(c => c.CarId == carId).FirstOrDefault();
         }
+
+        public List<CarDetailDto> GetCarDetails()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(Car car)
         {
             Car carToDelete = _cars.SingleOrDefault(c => c.CarId == car.CarId);

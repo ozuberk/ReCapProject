@@ -8,12 +8,10 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            RecapContext context = new RecapContext();
-            CarManager carManager = new CarManager(new EFCarDal(context));
-
-            foreach (var car in carManager.GetCarsByColorId(1))
+            CarManager carManager = new CarManager(new EFCarDal());
+            foreach (var car in carManager.GetCarDetails())
             {
-                Console.WriteLine(car.Description);
+                Console.WriteLine($"{car.CarId} Marka:{car.BrandName} Renk: {car.ColorName} Fiyatı: {car.DailyPrice}");
             }
         }
     }
