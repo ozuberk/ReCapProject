@@ -34,7 +34,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Color>> GetAll()
         {
-            return new DataResult<List<Color>>(_colorDal.GetAll(), true, Messages.Listed);
+            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), Messages.Listed);
         }
 
         public IDataResult<Color> GetById(int id)
