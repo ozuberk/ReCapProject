@@ -12,11 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).ConfigureContainer<ContainerBuilder>
     (builder =>
     {
         builder.RegisterModule(new AutofacBusinessModule());
     });
+
 
 
 var app = builder.Build();
