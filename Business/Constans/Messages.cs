@@ -16,5 +16,7 @@ namespace Business.Constans
         public static string MaintenanceTime = "Sistem bakımda";
         public static string Listed = "Listelendi";
         public static string CarIsNotReturned = "Araba geri dönmedi.";
+        public static string ImagesLimitExceeded = "Maksimum görsel yüklendi";
+        public static string DefaultImage = "Görsel yok Default görsel gönderilecek.";
     }
 }
