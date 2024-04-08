@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constans;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -20,6 +21,8 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+
+        [SecuredOperation("car.add,admin")]
         public IResult Add(Car car)
         {
             _carDal.Add(car);
